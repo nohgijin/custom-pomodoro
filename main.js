@@ -2,9 +2,6 @@
 const { app, BrowserWindow, screen } = require("electron");
 const path = require("path");
 
-require("electron-reload")(__dirname, {
-  electron: require(`${__dirname}/node_modules/electron`),
-});
 function createWindow() {
   // Create the browser window.
   const mainWindow = new BrowserWindow({

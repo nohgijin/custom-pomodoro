@@ -4,7 +4,8 @@
   "description": "A minimal Electron application",
   "main": "main.js",
   "scripts": {
-    "start": "electron ."
+    "start": "electron .",
+    "build": "electron-builder build"
   },
   "repository": "https://github.com/electron/electron-quick-start",
   "keywords": [
@@ -18,6 +19,42 @@
   "license": "CC0-1.0",
   "devDependencies": {
     "electron": "^17.0.0",
-    "electron-reload": "^2.0.0-alpha.1"
-  }
+    "electron-builder": "^22.14.13"
+  },
+  "build": {
+    "productName": "pomodoro",
+    "appId": "com.gijin.pomodoro",
+    "asar": false,
+    "protocols": {
+      "name": "pomodoro",
+      "schemes": [
+        "pomodoro"
+      ]
+    },
+    "mac": {
+      "target": [
+        "default"
+      ]
+    },
+    "dmg": {
+      "title": "pomodoro"
+    },
+    "win": {
+      "target": [
+        {
+          "target": "nsis",
+          "arch": [
+            "x64",
+            "ia32"
+          ]
+        }
+      ]
+    },
+    "nsis": {
+      "oneClick": false,
+      "allowToChangeInstallationDirectory": true,
+      "createDesktopShortcut": true
+    }
+  },
+  "dependencies": {}
 }
