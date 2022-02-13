@@ -1,10 +1,42 @@
-const init = () => {};
-
-localStorage.setItem("time", 5);
 let remainTime = Number(localStorage.getItem("time"));
+let visited = false;
 
-let flag = true;
-let initVisit = true;
+let min = String(parseInt(remainTime / 60));
+let seconds = String(remainTime % 60);
+
+if (min.length === 1) {
+  min = `0${min}`;
+}
+
+if (seconds.length === 1) {
+  seconds = `0${seconds}`;
+}
+document.querySelector(".min").value = min;
+document.querySelector(".seconds").value = seconds;
+
+const setTime = () => {
+  if (!visited) {
+    remainTime = Number(localStorage.getItem("time"));
+    visited = true;
+  }
+  let min = String(parseInt(remainTime / 60));
+  let seconds = String(remainTime % 60);
+
+  if (min.length === 1) {
+    min = `0${min}`;
+  }
+
+  if (seconds.length === 1) {
+    seconds = `0${seconds}`;
+  }
+  document.querySelector(".min").value = min;
+  document.querySelector(".seconds").value = seconds;
+};
+
+const progressTimer = () => {
+  setTime();
+  remainTime--;
+};
 
 const displayStartButton = () => {
   document.querySelector(".start").className = "start";
@@ -18,42 +50,46 @@ const displayStopButton = () => {
   document.querySelector(".stop").className = "stop";
 };
 
-const timer = setInterval(() => {
-  if (!initVisit) {
-    remainTime = Number(localStorage.getItem("time"));
-  }
-  let min = String(parseInt(remainTime / 60));
-  let seconds = String(remainTime % 60);
-  if (flag) {
-    displayStopButton();
-    flag = false;
-  }
-  if (min.length == 1) {
-    min = `0${min}`;
-  }
-  if (seconds.length == 1) {
-    seconds = `0${seconds}`;
-  }
-  document.querySelector(".min").innerHTML = min;
-  document.querySelector(".seconds").innerHTML = seconds;
-  remainTime--;
-
-  if (remainTime < 0) {
-    displayStartButton();
-    clearInterval(timer);
-    flag = true;
-    initVisit = false;
-  }
-}, 1000);
-
 const handleStartClick = () => {
-  timer();
+  displayStopButton();
+  startTimer = setInterval(() => {
+    progressTimer();
+    if (remainTime < 0) {
+      clearInterval(startTimer);
+      remainTime = Number(localStorage.getItem("time"));
+      displayStartButton();
+    }
+  }, 1000);
 };
 
-const handlePauseClick = () => {};
+//일시정지
+const handlePauseClick = () => {
+  displayStartButton();
+  clearInterval(startTimer);
+};
 
 //첨부터
 const handleStopClick = () => {
+  clearInterval(startTimer);
   displayStartButton();
-  clearInterval(timer);
+  remainTime = Number(localStorage.getItem("time"));
+  setTime();
+};
+
+const handleSaveClick = () => {
+  const min = Number(document.querySelector(".min").value);
+  const seconds = Number(document.querySelector(".seconds").value);
+  localStorage.setItem("time", min * 60 + seconds);
+  document.querySelector(".start").className = "start";
+  document.querySelector(".save").className = "hide save";
+};
+
+const setting = () => {
+  document.querySelector(".start").className = "hide start";
+  document.querySelector(".pause").className = "hide pause";
+  document.querySelector(".stop").className = "hide stop";
+  document.querySelector(".save").className = "save";
+  document.querySelector(".min").readOnly = false;
+  document.querySelector(".seconds").readOnly = false;
+  visited = false;
 };

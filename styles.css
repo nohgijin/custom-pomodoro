@@ -55,3 +55,19 @@ button {
 .hide {
   display: none;
 }
+
+input {
+  all: unset;
+}
+
+input.right {
+  text-align: right;
+}
+
+.setting {
+  cursor: pointer;
+}
+
+button {
+  cursor: pointer;
+}
