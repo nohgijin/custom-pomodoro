@@ -51,3 +51,7 @@ button {
   font-size: 1rem;
   line-height: 13px;
 }
+
+.hide {
+  display: none;
+}

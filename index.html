@@ -3,10 +3,6 @@
   <head>
     <meta charset="UTF-8" />
     <!-- https://developer.mozilla.org/en-US/docs/Web/HTTP/CSP -->
-    <meta
-      http-equiv="Content-Security-Policy"
-      content="default-src 'self'; script-src 'self'; style-src 'self' 'unsafe-inline'"
-    />
     <link href="./styles.css" rel="stylesheet" />
     <title>_</title>
   </head>
@@ -28,12 +24,17 @@
     </div>
     <div class="line"></div>
     <div class="content">
-      <div class="timer">25:00</div>
+      <div class="timer">
+        <span class="min">25</span>:<span class="seconds">00</span>
+      </div>
       <div class="wrapper">
-        <button class="start">Start</button>
+        <button class="start" onclick="handleStartClick()">Start</button>
+        <button class="hide pause" onclick="handlePauseClick()">Pause</button>
+        <button class="hide stop" onclick="handleStopClick()">Stop</button>
       </div>
     </div>
     <!-- You can also require other files to run in this process -->
     <script src="./renderer.js"></script>
+    <script src="./timer.js"></script>
   </body>
 </html>
