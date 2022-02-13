@@ -1,5 +1,6 @@
 body {
-  padding: 0px 18px 18px 18px;
+  padding: 8px 18px 18px 18px;
+  overflow: hidden;
 }
 
 .title {
@@ -58,6 +59,7 @@ button {
 
 input {
   all: unset;
+  width: 30%;
 }
 
 input.right {
