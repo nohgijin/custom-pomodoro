@@ -61,7 +61,7 @@ const handleStartClick = () => {
       clearInterval(startTimer);
       remainTime = Number(localStorage.getItem("time"));
       displayStartButton();
-      ipcRenderer.invoke("my-invokable-ipc");
+      ipcRenderer.invoke("타이머종료");
     }
   }, 1000);
 };

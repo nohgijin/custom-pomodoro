@@ -5,19 +5,23 @@ const {
   screen,
   Notification,
   ipcMain,
+
+  globalShortcut,
 } = require("electron");
-const path = require("path");
 
 function createWindow() {
   // Create the browser window.
   const mainWindow = new BrowserWindow({
     width: 460,
     height: 280,
+    frame: false,
+    transparent: true,
     webPreferences: {
       nodeIntegration: true,
       contextIsolation: false,
     },
   });
+
   mainWindow.setAlwaysOnTop(true);
 
   const displays = screen.getAllDisplays();
@@ -30,22 +34,42 @@ function createWindow() {
   // and load the index.html of the app.
   mainWindow.loadFile("index.html");
 
-  mainWindow.webContents.openDevTools();
+  globalShortcut.register("CommandOrControl+H", () => {
+    mainWindow.setSize(130, 50);
+
+    mainWindow.setPosition(
+      displays[0].size.width - 130,
+      displays[0].size.height - 50
+    );
+  });
+  globalShortcut.register("CommandOrControl+E", () => {
+    mainWindow.setSize(460, 280);
+
+    mainWindow.setPosition(
+      displays[0].size.width - 460,
+      displays[0].size.height - 280
+    );
+  });
+
+  // mainWindow.webContents.openDevTools();
+
+  ipcMain.handle("타이머종료", () => {
+    showNotification();
+    mainWindow.show();
+  });
 }
 
 const NOTIFICATION_TITLE = "뽀모도로 타이머";
 const NOTIFICATION_BODY = "집중시간이 종료되었습니다.";
 
 function showNotification() {
-  new Notification({
+  const noti = new Notification({
     title: NOTIFICATION_TITLE,
     body: NOTIFICATION_BODY,
-  }).show();
+  });
+  noti.show();
+  setTimeout(() => noti.close(), 3000);
 }
-
-ipcMain.handle("my-invokable-ipc", () => {
-  showNotification();
-});
 
 // This method will be called when Electron has finished
 // initialization and is ready to create browser windows.

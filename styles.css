@@ -1,6 +1,7 @@
 body {
   padding: 8px 18px 18px 18px;
   overflow: hidden;
+  background-color: white;
 }
 
 .title {
@@ -72,4 +73,35 @@ input.right {
 
 button {
   cursor: pointer;
+}
+
+@media (max-width: 200px) {
+  html,
+  body {
+    padding: 0;
+    margin: 0;
+    background-color: transparent;
+  }
+
+  .title {
+    display: none;
+  }
+
+  .line {
+    display: none;
+  }
+
+  .content .wrapper {
+    display: none;
+  }
+
+  .content {
+    padding: 0;
+    margin: 0;
+  }
+
+  .timer {
+    font-size: 30px;
+    margin-top: 45px;
+  }
 }
