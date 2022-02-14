@@ -1,8 +1,11 @@
+const { ipcRenderer } = require("electron");
+
 let remainTime = Number(localStorage.getItem("time"));
 let visited = false;
 
 let min = String(parseInt(remainTime / 60));
 let seconds = String(remainTime % 60);
+let startTimer;
 
 if (min.length === 1) {
   min = `0${min}`;
@@ -58,6 +61,7 @@ const handleStartClick = () => {
       clearInterval(startTimer);
       remainTime = Number(localStorage.getItem("time"));
       displayStartButton();
+      ipcRenderer.invoke("my-invokable-ipc");
     }
   }, 1000);
 };
@@ -82,9 +86,12 @@ const handleSaveClick = () => {
   localStorage.setItem("time", min * 60 + seconds);
   document.querySelector(".start").className = "start";
   document.querySelector(".save").className = "hide save";
+  document.querySelector(".min").readOnly = true;
+  document.querySelector(".seconds").readOnly = true;
 };
 
 const setting = () => {
+  handleStopClick();
   document.querySelector(".start").className = "hide start";
   document.querySelector(".pause").className = "hide pause";
   document.querySelector(".stop").className = "hide stop";

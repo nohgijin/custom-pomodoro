@@ -1,5 +1,11 @@
 // Modules to control application life and create native browser window
-const { app, BrowserWindow, screen } = require("electron");
+const {
+  app,
+  BrowserWindow,
+  screen,
+  Notification,
+  ipcMain,
+} = require("electron");
 const path = require("path");
 
 function createWindow() {
@@ -8,7 +14,8 @@ function createWindow() {
     width: 460,
     height: 280,
     webPreferences: {
-      preload: path.join(__dirname, "preload.js"),
+      nodeIntegration: true,
+      contextIsolation: false,
     },
   });
   mainWindow.setAlwaysOnTop(true);
@@ -23,8 +30,22 @@ function createWindow() {
   // and load the index.html of the app.
   mainWindow.loadFile("index.html");
 
-  // mainWindow.webContents.openDevTools();
+  mainWindow.webContents.openDevTools();
 }
+
+const NOTIFICATION_TITLE = "뽀모도로 타이머";
+const NOTIFICATION_BODY = "집중시간이 종료되었습니다.";
+
+function showNotification() {
+  new Notification({
+    title: NOTIFICATION_TITLE,
+    body: NOTIFICATION_BODY,
+  }).show();
+}
+
+ipcMain.handle("my-invokable-ipc", () => {
+  showNotification();
+});
 
 // This method will be called when Electron has finished
 // initialization and is ready to create browser windows.
