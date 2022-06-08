@@ -15,7 +15,7 @@ npm run build
 ## Usage
 
 ```
-Shortcuts
+Shortcutss
 - 확장: command+E
 - 축소: command+H
 - 종료: command+Q
